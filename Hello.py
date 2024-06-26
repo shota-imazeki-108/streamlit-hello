@@ -20,31 +20,35 @@ LOGGER = get_logger(__name__)
 
 def run():
     st.set_page_config(
-        page_title="Hello",
+        page_title="Sample",
         page_icon="👋",
     )
 
-    st.write("# Welcome to Streamlit! 👋")
+    # st.write("# Welcome to Streamlit! 👋")
+    st.markdown('# Sample')
 
-    st.sidebar.success("Select a demo above.")
+    option = st.selectbox("カテゴリを選択してください。", ("ヘルスケア", "アパレル", "調理器具", "その他"))
+    st.write("選択したカテゴリは", option, "です。")
 
-    st.markdown(
-        """
-        Streamlit is an open-source app framework built specifically for
-        Machine Learning and Data Science projects.
-        **👈 Select a demo from the sidebar** to see some examples
-        of what Streamlit can do!
-        ### Want to learn more?
-        - Check out [streamlit.io](https://streamlit.io)
-        - Jump into our [documentation](https://docs.streamlit.io)
-        - Ask a question in our [community
-          forums](https://discuss.streamlit.io)
-        ### See more complex demos
-        - Use a neural net to [analyze the Udacity Self-driving Car Image
-          Dataset](https://github.com/streamlit/demo-self-driving)
-        - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
-    """
-    )
+    number = st.number_input("金額を入力してください。", step=1)
+    st.write("入力した金額は ", number, "円です。")
+    pred = (-0.00636949 * number) + 512.953 # 単回帰モデルで求めたパラメータを使用(精度はサンプルなので気にしないでください)
+    if pred < 5:
+      pred = 5 # 負の値はわかりづらいと思ったので。
+    st.write("予想件数:  ", int(pred))
+    st.write("サンプルなので精度は気にしないでください。")
+
+    if pred > 512:
+      score = 5
+    elif pred >= 470:
+      score = 4
+    elif pred >= 455:
+      score = 3
+    elif pred >= 425:
+      score = 2
+    else:
+      score = 1
+    st.write("5段階評価:  ", score)
 
 
 if __name__ == "__main__":
