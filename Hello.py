@@ -32,11 +32,13 @@ def run():
 
     number = st.number_input("金額を入力してください。", step=1)
     st.write("入力した金額は ", number, "円です。")
+    st.divider()
     pred = (-0.00636949 * number) + 512.953 # 単回帰モデルで求めたパラメータを使用(精度はサンプルなので気にしないでください)
     if pred < 5:
       pred = 5 # 負の値はわかりづらいと思ったので。
     st.write("予想件数:  ", int(pred))
-    st.write("サンプルなので精度は気にしないでください。")
+    st.write("注意！！サンプルなので精度は気にしないでください。")
+    st.divider()
 
     if pred > 512:
       score = 5
